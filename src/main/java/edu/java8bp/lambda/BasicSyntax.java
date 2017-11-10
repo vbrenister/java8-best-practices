@@ -6,8 +6,6 @@ import java.util.Comparator;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-import static edu.java8bp.lambda.BasicSyntax.Uncheck.uncheckRunnable;
-
 public class BasicSyntax {
 
     // Verbose
@@ -36,46 +34,10 @@ public class BasicSyntax {
         return result;
     };
 
+    // Redundant
+    private Function<String, String> toLowerCase = s -> s.toLowerCase();
 
-//    private Function<String, Class> loader = s -> Class.forName(s);
+    // Prefer
+    private Function<String, String> toLowerCaseMethodRef = String::toLowerCase;
 
-    static final class Uncheck {
-        interface UncheckedFunction<T, R> {
-            R apply(T t) throws Exception;
-        }
-
-        interface UncheckedRunnable {
-            void run() throws Exception;
-        }
-
-        static public Function<String, Class> uncheckFunction(Uncheck.UncheckedFunction<String, Class> withException) {
-            return s -> {
-                try {
-                    return withException.apply(s);
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
-            };
-        }
-
-        static public Runnable uncheckRunnable(Uncheck.UncheckedRunnable withException) {
-            return () -> {
-                try {
-                    withException.run();
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
-            };
-        }
-    }
-
-
-    private Function<String, Class> checkedLoader = Uncheck.uncheckFunction(s -> Class.forName(s));
-
-    private void doSomething() {
-        uncheckRunnable(() -> {
-            System.out.println("Doing something");
-            Thread.sleep(1000);
-        });
-    }
 }
