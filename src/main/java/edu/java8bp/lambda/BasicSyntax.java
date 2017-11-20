@@ -3,8 +3,7 @@ package edu.java8bp.lambda;
 import edu.java8bp.User;
 
 import java.util.Comparator;
-import java.util.function.Function;
-import java.util.function.Predicate;
+import java.util.function.*;
 
 public class BasicSyntax {
 
@@ -40,4 +39,16 @@ public class BasicSyntax {
     // Prefer
     private Function<String, String> toLowerCaseMethodRef = String::toLowerCase;
 
+    // Jdk8 Predefined functional interfaces
+    private Runnable runnable = () -> System.out.println("Run in separate thread");
+
+    private Supplier<String> stringSupplier = () -> "Something";
+
+    private Consumer<String> stringConsumer = str -> System.out.println(str);
+
+    private Function<String, Integer> stringLongFunction = str -> str.length();
+
+    private Predicate<String> stringPredicate = str -> str.length() > 10;
+
+    private BiFunction<String, String, Integer> stringIntegerBiFunction = (str1, str2) -> str1.length() + str2.length();
 }
